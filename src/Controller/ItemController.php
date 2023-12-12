@@ -11,6 +11,13 @@ class ItemController extends AbstractController
      */
     public function index(): string
     {
+        //Comme l'utilisateur est disponible pour tous les controleurs, je vérifie simplement si je suis connecté
+        if (!$this->user) {
+            //Je ne suis pas connecté
+            echo 'Unauthorized access';
+            header('HTTP/1.1 401 Unauthorised');
+            exit();
+        }
         $itemManager = new ItemManager();
         $items = $itemManager->selectAll('title');
 
